@@ -80,7 +80,7 @@ spec:
                   title: Image Host
                   type: string
                   description: Host for storing image
-                  default: quay-lh97b.apps.cluster-lh97b.sandbox1814.opentlc.com
+                  default: quay-svqmn.apps.cluster-svqmn.sandbox1110.opentlc.com
                 image_organization:
                   title: Organization
                   type: string
@@ -103,9 +103,7 @@ spec:
               title: Repo Host
               type: string
               description: Your SCM host
-              default: gitlab-gitlab.apps.cluster-lh97b.sandbox1814.opentlc.com
-              enum:
-                - gitlab-gitlab.apps.cluster-lh97b.sandbox1814.opentlc.com
+              default: gitlab-gitlab.apps.cluster-svqmn.sandbox1110.opentlc.com             
             owner:
               title: Repo Owner
               type: string
