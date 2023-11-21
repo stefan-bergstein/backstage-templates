@@ -22,7 +22,7 @@ spec:
           title: Name
           type: string
           description: Unique name of the component
-          default: my-quarkus-3
+          default: my-quarkus-app-3
           ui:field: EntityNamePicker
           maxLength: 14
         group_id:
@@ -52,7 +52,6 @@ spec:
         image_registry:
           title: Image Registry
           type: string
-          default: Quay 
           enum:
             - Openshift
             - Quay
@@ -112,15 +111,26 @@ spec:
               default: development
               enum:
                 - development
-    - title: OCP Cluster
+    - title:  Cluster
       required:
-        - cluster
+        - repo
       properties:
-        cluster:
-          type: string
-          title: FQDN of OCP cluster
-          description: FQDN of OCP cluster
-          default: .apps.cluster-c4zsp.sandbox160.opentlc.com              
+        repo:
+          title: Repository Location
+          type: object
+          properties:
+            host:
+              title: Repo Host
+              type: string
+              description: Your SCM host
+              default: gitlab-gitlab.apps.cluster-c4zsp.sandbox160.opentlc.com             
+            owner:
+              title: Repo Owner
+              type: string
+              description: Your SCM host organization/group
+              default: development
+              enum:
+                - development
   steps:
     - id: template
       name: Fetch Skeleton + Template
@@ -137,8 +147,7 @@ spec:
           artifact_id: ${{ parameters.artifact_id }}
           java_package_name: ${{ parameters.java_package_name }}
           owner: ${{ user.entity.metadata.name }}
-          # cluster: .apps.cluster-c4zsp.sandbox160.opentlc.com
-          cluster: ${{ parameters.cluster }}
+          cluster: .apps.cluster-c4zsp.sandbox160.opentlc.com
           host: ${{ parameters.repo.host }}
           destination: ${{ parameters.repo.owner }}/${{ parameters.component_id }}
           quay_destination: ${{ parameters.image_organization}}/${{ parameters.component_id }}
@@ -171,8 +180,7 @@ spec:
           source_repository: https://${{ parameters.repo.host }}/${{ parameters.repo.owner }}/${{parameters.component_id}}.git
           repository_name: ${{parameters.component_id}}
           git_owner: ${{ parameters.repo.owner }}
-          # cluster: .apps.cluster-c4zsp.sandbox160.opentlc.com
-          cluster: ${{ parameters.cluster }}
+          cluster: .apps.cluster-c4zsp.sandbox160.opentlc.com
           namespace: ${{ parameters.component_id }}-dev
           image_registry: ${{ parameters.image_registry }}
           image_host: ${{ parameters.image_host }}
