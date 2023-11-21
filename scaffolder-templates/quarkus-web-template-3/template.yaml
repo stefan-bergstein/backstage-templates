@@ -22,7 +22,7 @@ spec:
           title: Name
           type: string
           description: Unique name of the component
-          default: my-quarkus-app-3
+          default: my-quarkus-3
           ui:field: EntityNamePicker
           maxLength: 14
         group_id:
@@ -91,7 +91,7 @@ spec:
                   default: latest
                   type: string
                   description: Build Image tag
-    - title: Application repository Information
+    - title: Application repository Informationn
       required:
         - repo
       properties:
