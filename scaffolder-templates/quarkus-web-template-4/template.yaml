@@ -1,9 +1,9 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: quarkus-web-template-3
-  title: Quarkus Service with ArgoCD and a Tekton Pipeline 3
-  description: Create a simple microservice using Quarkus with ArgoCD and a Tekton Pipeline 3
+  name: quarkus-web-template-4
+  title: Quarkus Service with ArgoCD and a Tekton Pipeline 4
+  description: Create a simple microservice using Quarkus with ArgoCD and a Tekton Pipeline 4
   tags:
     - recommended
     - java
@@ -22,7 +22,7 @@ spec:
           title: Name
           type: string
           description: Unique name of the component
-          default: my-quarkus-3
+          default: my-quarkus-4
           ui:field: EntityNamePicker
           maxLength: 14
         group_id:
@@ -33,7 +33,7 @@ spec:
         artifact_id:
           title: Artifact Id
           type: string
-          default: quarkus-app-3
+          default: quarkus-app-4
           description: Maven Artifact Id
         java_package_name:
           title: Java Package Name
@@ -181,7 +181,7 @@ spec:
           image_tag: ${{ parameters.image_tag }}
           port: 8080
           repository_host: ${{ parameters.repo.host }}
-          deployment_name: quarkus-template-3
+          deployment_name: quarkus-template-4
         targetPath: ./tenant-gitops
 
     - id: publish-gitops
