@@ -1,9 +1,9 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: python-web-template-6
-  title: Python app with ArgoCD and a Tekton Pipeline-6
-  description: Create a simple python app with ArgoCD and a Tekton Pipeline-6
+  name: python-web-template-7
+  title: Python app with ArgoCD and a Tekton Pipeline-7
+  description: Create a simple python app with ArgoCD and a Tekton Pipeline-7
   tags:
     - recommended
     - java
@@ -22,7 +22,7 @@ spec:
           title: Name
           type: string
           description: Unique name of the component
-          default: my-python-6
+          default: my-python-7
           ui:field: EntityNamePicker
           maxLength: 14
         group_id:
@@ -33,7 +33,7 @@ spec:
         artifact_id:
           title: Artifact Id
           type: string
-          default: mypython-app-6
+          default: mypython-app-7
           description: Maven Artifact Id
         java_package_name:
           title: Java Package Name
@@ -181,7 +181,7 @@ spec:
           image_tag: ${{ parameters.image_tag }}
           port: 8080
           repository_host: ${{ parameters.repo.host }}
-          deployment_name: python-template-6
+          deployment_name: python-template-7
         targetPath: ./tenant-gitops
 
     - id: publish-gitops
