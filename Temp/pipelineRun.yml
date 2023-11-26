@@ -1,0 +1,43 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: build-deploy-simple-python-web-server-
+  namespace: my-python-61-dev
+  labels:
+    backstage.io/kubernetes-id: my-python-61
+    rht-gitops.com/janus-argocd: my-python-61-dev-build
+    tekton.dev/pipeline: my-python-61-build
+    type: pipeline
+spec:
+  params:
+    - name: source-repo
+      value: >-
+        https://gitlab-gitlab.apps.cluster-glgzf.sandbox2052.opentlc.com/development/my-python-61.git
+    - name: source-branch
+      value: master
+    - name: output-image
+      value: >-
+        quay-glgzf.apps.cluster-glgzf.sandbox2052.opentlc.com/quayadmin/my-python-61
+    - name: component-id
+      value: my-python-61
+  pipelineRef:
+    name: my-python-61-build
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+  workspaces:
+    - name: source-folder
+      volumeClaimTemplate:
+        metadata:
+          creationTimestamp: null
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+        status: {}
+    - emptyDir: {}
+      name: maven-settings
+    - name: docker-config
+      secret:
+        secretName: my-python-61-registry-creds

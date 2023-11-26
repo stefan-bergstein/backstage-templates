@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: build-deploy-simple-python-web-server-
+  namespace: my-python-61-dev
+spec:
+  params:
+    - name: deployment-namex
+      value: python-web-server
+    - name: git-url
+      value: 'https://gitlab-gitlab.apps.cluster-2l49r.sandbox1327.opentlc.com/development/my-python-61.git'
+    - name: git-revision
+      value: master
+    - name: IMAGE
+      value: >-
+        quay-2l49r.apps.cluster-2l49r.sandbox1327.opentlc.com/quayadmin/my-python-61
+  pipelineRef:
+    name: build-and-deploy
+  serviceAccountName: pipeline
+  timeouts:
+    pipeline: 1h0m0s
+  workspaces:
+    - name: shared-workspace
+      volumeClaimTemplate:
+        metadata:
+          creationTimestamp: null
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 500Mi
+        status: {}
+    - name: docker-config
+      secret:
+        secretName: my-python-6-registry-creds
