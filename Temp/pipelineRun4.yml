@@ -1,0 +1,773 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"tekton.dev/v1beta1","kind":"Pipeline","metadata":{"annotations":{},"labels":{"backstage.io/kubernetes-id":"py-14","rht-gitops.com/janus-argocd":"py-14-dev-build","type":"pipeline"},"name":"py-14-build","namespace":"py-14-dev"},"spec":{"params":[{"default":"https://gitlab-gitlab.apps.cluster-mcr9m.sandbox906.opentlc.com/development/py-14.git","description":"source
+      repo that contains the application
+      code","name":"source-repo","type":"string"},{"default":"main","description":"source
+      branch to build
+      from","name":"source-branch","type":"string"},{"default":"quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14","description":"reference
+      of the image that will get
+      created","name":"output-image","type":"string"},{"description":"Component
+      id","name":"component-id","type":"string"}],"tasks":[{"name":"git-clone","params":[{"name":"url","value":"$(params.source-repo)"},{"name":"revision","value":"$(params.source-branch)"}],"taskRef":{"kind":"ClusterTask","name":"git-clone"},"workspaces":[{"name":"output","workspace":"source-folder"}]},{"name":"build-and-push","params":[{"name":"IMAGE","value":"$(params.output-image)"}],"runAfter":["git-clone"],"taskRef":{"kind":"ClusterTask","name":"buildah"},"workspaces":[{"name":"source","workspace":"source-folder"},{"name":"dockerconfig","workspace":"docker-config"}]}],"workspaces":[{"name":"source-folder"},{"name":"maven-settings"},{"name":"docker-config"}]}}
+  resourceVersion: '9114345'
+  name: bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0
+  uid: 7d5c4710-3228-40f2-87e2-d6802cdea794
+  creationTimestamp: '2023-11-28T12:33:59Z'
+  generation: 1
+  managedFields:
+    - apiVersion: tekton.dev/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            'f:rht-gitops.com/janus-argocd': {}
+            'f:tekton.dev/pipeline': {}
+            'f:type': {}
+      manager: openshift-pipelines-controller
+      operation: Update
+      time: '2023-11-28T12:33:59Z'
+    - apiVersion: tekton.dev/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:backstage.io/kubernetes-id': {}
+            'f:triggers.tekton.dev/eventlistener': {}
+            'f:triggers.tekton.dev/trigger': {}
+            'f:triggers.tekton.dev/triggers-eventid': {}
+        'f:spec':
+          .: {}
+          'f:params': {}
+          'f:pipelineRef':
+            .: {}
+            'f:name': {}
+          'f:serviceAccountName': {}
+          'f:timeout': {}
+          'f:workspaces': {}
+      manager: openshift-pipelines-triggers-eventlistenersink
+      operation: Update
+      time: '2023-11-28T12:33:59Z'
+    - apiVersion: tekton.dev/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          .: {}
+          'f:completionTime': {}
+          'f:conditions': {}
+          'f:pipelineSpec':
+            .: {}
+            'f:params': {}
+            'f:tasks': {}
+            'f:workspaces': {}
+          'f:startTime': {}
+          'f:taskRuns':
+            .: {}
+            'f:bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0-build-and-push':
+              .: {}
+              'f:pipelineTaskName': {}
+              'f:status':
+                .: {}
+                'f:completionTime': {}
+                'f:conditions': {}
+                'f:podName': {}
+                'f:startTime': {}
+                'f:steps': {}
+                'f:taskSpec':
+                  .: {}
+                  'f:description': {}
+                  'f:params': {}
+                  'f:results': {}
+                  'f:steps': {}
+                  'f:volumes': {}
+                  'f:workspaces': {}
+            'f:bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0-git-clone':
+              .: {}
+              'f:pipelineTaskName': {}
+              'f:status':
+                .: {}
+                'f:completionTime': {}
+                'f:conditions': {}
+                'f:podName': {}
+                'f:startTime': {}
+                'f:steps': {}
+                'f:taskResults': {}
+                'f:taskSpec':
+                  .: {}
+                  'f:description': {}
+                  'f:params': {}
+                  'f:results': {}
+                  'f:steps': {}
+                  'f:workspaces': {}
+      manager: openshift-pipelines-controller
+      operation: Update
+      subresource: status
+      time: '2023-11-28T12:35:17Z'
+  namespace: py-14-dev
+  labels:
+    backstage.io/kubernetes-id: py-14
+    rht-gitops.com/janus-argocd: py-14-dev-build
+    tekton.dev/pipeline: py-14-build
+    triggers.tekton.dev/eventlistener: py-14-el
+    triggers.tekton.dev/trigger: commit-trig
+    triggers.tekton.dev/triggers-eventid: 6d591f3f-de36-4085-83d6-8ddb313671c1
+    type: pipeline
+spec:
+  params:
+    - name: source-repo
+      value: >-
+        https://gitlab-gitlab.apps.cluster-mcr9m.sandbox906.opentlc.com/development/py-14.git
+    - name: source-branch
+      value: 3af5f2beab7d8af5871cc470672b2ab663143b5c
+    - name: output-image
+      value: quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14
+    - name: component-id
+      value: py-14
+  pipelineRef:
+    name: py-14-build
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+  workspaces:
+    - name: source-folder
+      volumeClaimTemplate:
+        metadata:
+          creationTimestamp: null
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+        status: {}
+    - emptyDir: {}
+      name: maven-settings
+    - name: docker-config
+      secret:
+        secretName: py-14-registry-creds
+exited with code 125 (image:
+                "registry.redhat.io/rhel8/buildah@sha256:7678ad61e06e442b0093ab73faa73ce536721ae523015dd942f9196c4699a31d");
+                for logs run: kubectl -n py-14-dev logs
+                bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0-build-and-push-pod -c
+                step-build-and-push
+              reason: Failed
+              status: 'False'
+              type: Succeeded
+          podName: bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0-build-and-push-pod
+          startTime: '2023-11-28T12:34:13Z'
+          steps:
+            - container: step-build-and-push
+              imageID: >-
+                registry.redhat.io/rhel8/buildah@sha256:7678ad61e06e442b0093ab73faa73ce536721ae523015dd942f9196c4699a31d
+              name: build-and-push
+              terminated:
+                containerID: >-
+                  cri-o://46ca8f0f2b575f349e0b15b666e7562ce2712660de132188ff7529ceffefd669
+                exitCode: 125
+                finishedAt: '2023-11-28T12:35:16Z'
+                reason: Error
+                startedAt: '2023-11-28T12:34:33Z'
+          taskSpec:
+            description: >-
+              Buildah task builds source into a container image and then pushes
+              it to a container registry.
+
+              Buildah Task builds source into a container image using Project
+              Atomic's Buildah build tool.It uses Buildah's support for building
+              from Dockerfiles, using its buildah bud command.This command
+              executes the directives in the Dockerfile to assemble a container
+              image, then pushes that image to a container registry.
+            params:
+              - description: Reference of the image buildah will produce.
+                name: IMAGE
+                type: string
+              - default: >-
+                  registry.redhat.io/rhel8/buildah@sha256:ac0b8714cc260c94435cab46fe41b3de0ccbc3d93e38c395fa9d52ac49e521fe
+                description: The location of the buildah builder image.
+                name: BUILDER_IMAGE
+                type: string
+              - default: vfs
+                description: Set buildah storage driver
+                name: STORAGE_DRIVER
+                type: string
+              - default: ./Dockerfile
+                description: Path to the Dockerfile to build.
+                name: DOCKERFILE
+                type: string
+              - default: .
+                description: Path to the directory to use as context.
+                name: CONTEXT
+                type: string
+              - default: 'true'
+                description: >-
+                  Verify the TLS on the registry endpoint (for push/pull to a
+                  non-TLS registry)
+                name: TLSVERIFY
+                type: string
+              - default: oci
+                description: 'The format of the built container, oci or docker'
+                name: FORMAT
+                type: string
+              - default: ''
+                description: >-
+                  Extra parameters passed for the build command when building
+                  images.
+                name: BUILD_EXTRA_ARGS
+                type: string
+              - default: ''
+                description: >-
+                  Extra parameters passed for the push command when pushing
+                  images.
+                name: PUSH_EXTRA_ARGS
+                type: string
+              - default: 'false'
+                description: Skip pushing the built image
+                name: SKIP_PUSH
+                type: string
+            results:
+              - description: Digest of the image just built.
+                name: IMAGE_DIGEST
+                type: string
+              - description: Image repository where the built image would be pushed to
+                name: IMAGE_URL
+                type: string
+            steps:
+              - image: >-
+                  registry.redhat.io/rhel8/buildah@sha256:ac0b8714cc260c94435cab46fe41b3de0ccbc3d93e38c395fa9d52ac49e521fe
+                name: build-and-push
+                resources: {}
+                script: >
+                  buildah --storage-driver=vfs bud \
+                     --format=oci \
+                    --tls-verify=true --no-cache \
+                    -f ./Dockerfile -t quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14 .
+
+                  [[ "false" == "true" ]] && echo "Push skipped" && exit 0
+
+
+                  if [[ "true" == "true" ]]; then
+
+                    # if config.json exists at workspace root, we use that
+                    if test -f "/workspace/dockerconfig/config.json"; then
+                      export DOCKER_CONFIG="/workspace/dockerconfig"
+
+                    # else we look for .dockerconfigjson at the root
+                    elif test -f "/workspace/dockerconfig/.dockerconfigjson"; then
+                      cp "/workspace/dockerconfig/.dockerconfigjson" "$HOME/.docker/config.json"
+                      export DOCKER_CONFIG="$HOME/.docker"
+
+                    # need to error out if neither files are present
+                    else
+                      echo "neither 'config.json' nor '.dockerconfigjson' found at workspace root"
+                      exit 1
+                    fi
+                  fi
+
+
+                  buildah --storage-driver=vfs push \
+                     --tls-verify=true \
+                    --digestfile /tmp/image-digest quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14 \
+                    docker://quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14
+                  cat /tmp/image-digest | tee /tekton/results/IMAGE_DIGEST
+
+                  echo
+                  "quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14"
+                  | tee /tekton/results/IMAGE_URL
+                securityContext:
+                  capabilities:
+                    add:
+                      - SETFCAP
+                volumeMounts:
+                  - mountPath: /var/lib/containers
+                    name: varlibcontainers
+                workingDir: /workspace/source
+            volumes:
+              - emptyDir: {}
+                name: varlibcontainers
+            workspaces:
+              - name: source
+              - description: >-
+                  An optional workspace that allows providing a
+                  .docker/config.json file for Buildah to access the container
+                  registry. The file should be placed at the root of the
+                  Workspace with name config.json or .dockerconfigjson.
+                name: dockerconfig
+                optional: true
+          duration: 1m 4s
+          reason: Failed
+    workspaces:
+      - name: source-folder
+      - name: maven-settings
+      - name: docker-config
+  startTime: '2023-11-28T12:33:59Z'
+  taskRuns:
+    bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0-build-and-push:
+      pipelineTaskName: build-and-push
+      status:
+        completionTime: '2023-11-28T12:35:17Z'
+        conditions:
+          - lastTransitionTime: '2023-11-28T12:35:17Z'
+            message: >
+              "step-build-and-push" exited with code 125 (image:
+              "registry.redhat.io/rhel8/buildah@sha256:7678ad61e06e442b0093ab73faa73ce536721ae523015dd942f9196c4699a31d");
+              for logs run: kubectl -n py-14-dev logs
+              bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0-build-and-push-pod -c
+              step-build-and-push
+            reason: Failed
+            status: 'False'
+            type: Succeeded
+        podName: bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0-build-and-push-pod
+        startTime: '2023-11-28T12:34:13Z'
+        steps:
+          - container: step-build-and-push
+            imageID: >-
+              registry.redhat.io/rhel8/buildah@sha256:7678ad61e06e442b0093ab73faa73ce536721ae523015dd942f9196c4699a31d
+            name: build-and-push
+            terminated:
+              containerID: >-
+                cri-o://46ca8f0f2b575f349e0b15b666e7562ce2712660de132188ff7529ceffefd669
+              exitCode: 125
+              finishedAt: '2023-11-28T12:35:16Z'
+              reason: Error
+              startedAt: '2023-11-28T12:34:33Z'
+        taskSpec:
+          description: >-
+            Buildah task builds source into a container image and then pushes it
+            to a container registry.
+
+            Buildah Task builds source into a container image using Project
+            Atomic's Buildah build tool.It uses Buildah's support for building
+            from Dockerfiles, using its buildah bud command.This command
+            executes the directives in the Dockerfile to assemble a container
+            image, then pushes that image to a container registry.
+          params:
+            - description: Reference of the image buildah will produce.
+              name: IMAGE
+              type: string
+            - default: >-
+                registry.redhat.io/rhel8/buildah@sha256:ac0b8714cc260c94435cab46fe41b3de0ccbc3d93e38c395fa9d52ac49e521fe
+              description: The location of the buildah builder image.
+              name: BUILDER_IMAGE
+              type: string
+            - default: vfs
+              description: Set buildah storage driver
+              name: STORAGE_DRIVER
+              type: string
+            - default: ./Dockerfile
+              description: Path to the Dockerfile to build.
+              name: DOCKERFILE
+              type: string
+            - default: .
+              description: Path to the directory to use as context.
+              name: CONTEXT
+              type: string
+            - default: 'true'
+              description: >-
+                Verify the TLS on the registry endpoint (for push/pull to a
+                non-TLS registry)
+              name: TLSVERIFY
+              type: string
+            - default: oci
+              description: 'The format of the built container, oci or docker'
+              name: FORMAT
+              type: string
+            - default: ''
+              description: >-
+                Extra parameters passed for the build command when building
+                images.
+              name: BUILD_EXTRA_ARGS
+              type: string
+            - default: ''
+              description: >-
+                Extra parameters passed for the push command when pushing
+                images.
+              name: PUSH_EXTRA_ARGS
+              type: string
+            - default: 'false'
+              description: Skip pushing the built image
+              name: SKIP_PUSH
+              type: string
+          results:
+            - description: Digest of the image just built.
+              name: IMAGE_DIGEST
+              type: string
+            - description: Image repository where the built image would be pushed to
+              name: IMAGE_URL
+              type: string
+          steps:
+            - image: >-
+                registry.redhat.io/rhel8/buildah@sha256:ac0b8714cc260c94435cab46fe41b3de0ccbc3d93e38c395fa9d52ac49e521fe
+              name: build-and-push
+              resources: {}
+              script: >
+                buildah --storage-driver=vfs bud \
+                   --format=oci \
+                  --tls-verify=true --no-cache \
+                  -f ./Dockerfile -t quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14 .
+
+                [[ "false" == "true" ]] && echo "Push skipped" && exit 0
+
+
+                if [[ "true" == "true" ]]; then
+
+                  # if config.json exists at workspace root, we use that
+                  if test -f "/workspace/dockerconfig/config.json"; then
+                    export DOCKER_CONFIG="/workspace/dockerconfig"
+
+                  # else we look for .dockerconfigjson at the root
+                  elif test -f "/workspace/dockerconfig/.dockerconfigjson"; then
+                    cp "/workspace/dockerconfig/.dockerconfigjson" "$HOME/.docker/config.json"
+                    export DOCKER_CONFIG="$HOME/.docker"
+
+                  # need to error out if neither files are present
+                  else
+                    echo "neither 'config.json' nor '.dockerconfigjson' found at workspace root"
+                    exit 1
+                  fi
+                fi
+
+
+                buildah --storage-driver=vfs push \
+                   --tls-verify=true \
+                  --digestfile /tmp/image-digest quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14 \
+                  docker://quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14
+                cat /tmp/image-digest | tee /tekton/results/IMAGE_DIGEST
+
+                echo
+                "quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14"
+                | tee /tekton/results/IMAGE_URL
+              securityContext:
+                capabilities:
+                  add:
+                    - SETFCAP
+              volumeMounts:
+                - mountPath: /var/lib/containers
+                  name: varlibcontainers
+              workingDir: /workspace/source
+          volumes:
+            - emptyDir: {}
+              name: varlibcontainers
+          workspaces:
+            - name: source
+            - description: >-
+                An optional workspace that allows providing a
+                .docker/config.json file for Buildah to access the container
+                registry. The file should be placed at the root of the Workspace
+                with name config.json or .dockerconfigjson.
+              name: dockerconfig
+              optional: true
+    bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0-git-clone:
+      pipelineTaskName: git-clone
+      status:
+        completionTime: '2023-11-28T12:34:13Z'
+        conditions:
+          - lastTransitionTime: '2023-11-28T12:34:13Z'
+            message: All Steps have completed executing
+            reason: Succeeded
+            status: 'True'
+            type: Succeeded
+        podName: bcd6ce7c-05d2-4908-84d7-f6c5688ca5a0-git-clone-pod
+        startTime: '2023-11-28T12:33:59Z'
+        steps:
+          - container: step-clone
+            imageID: >-
+              registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:2b4c4958cabdceffefef68940608f2c7e6774c0b94ba3eb49fa1b9ff0b544e8c
+            name: clone
+            terminated:
+              containerID: >-
+                cri-o://a6a85bd62390bfcaef61f3606cccdd8143c69009e74f81115b0badab71b05459
+              exitCode: 0
+              finishedAt: '2023-11-28T12:34:12Z'
+              message: >-
+                [{"key":"commit","value":"3af5f2beab7d8af5871cc470672b2ab663143b5c","type":1},{"key":"url","value":"https://gitlab-gitlab.apps.cluster-mcr9m.sandbox906.opentlc.com/development/py-14.git","type":1}]
+              reason: Completed
+              startedAt: '2023-11-28T12:34:12Z'
+        taskResults:
+          - name: commit
+            type: string
+            value: 3af5f2beab7d8af5871cc470672b2ab663143b5c
+          - name: url
+            type: string
+            value: >-
+              https://gitlab-gitlab.apps.cluster-mcr9m.sandbox906.opentlc.com/development/py-14.git
+        taskSpec:
+          description: >-
+            These Tasks are Git tasks to work with repositories used by other
+            tasks in your Pipeline.
+
+            The git-clone Task will clone a repo from the provided url into the
+            output Workspace. By default the repo will be cloned into the root
+            of your Workspace. You can clone into a subdirectory by setting this
+            Task's subdirectory param. This Task also supports sparse checkouts.
+            To perform a sparse checkout, pass a list of comma separated
+            directory patterns to this Task's sparseCheckoutDirectories param.
+          params:
+            - description: Repository URL to clone from.
+              name: url
+              type: string
+            - default: ''
+              description: 'Revision to checkout. (branch, tag, sha, ref, etc...)'
+              name: revision
+              type: string
+            - default: ''
+              description: Refspec to fetch before checking out revision.
+              name: refspec
+              type: string
+            - default: 'true'
+              description: Initialize and fetch git submodules.
+              name: submodules
+              type: string
+            - default: '1'
+              description: >-
+                Perform a shallow clone, fetching only the most recent N
+                commits.
+              name: depth
+              type: string
+            - default: 'true'
+              description: >-
+                Set the `http.sslVerify` global git config. Setting this to
+                `false` is not advised unless you are sure that you trust your
+                git remote.
+              name: sslVerify
+              type: string
+            - default: ca-bundle.crt
+              description: >-
+                file name of mounted crt using ssl-ca-directory workspace.
+                default value is ca-bundle.crt.
+              name: crtFileName
+              type: string
+            - default: ''
+              description: >-
+                Subdirectory inside the `output` Workspace to clone the repo
+                into.
+              name: subdirectory
+              type: string
+            - default: ''
+              description: >-
+                Define the directory patterns to match or exclude when
+                performing a sparse checkout.
+              name: sparseCheckoutDirectories
+              type: string
+            - default: 'true'
+              description: >-
+                Clean out the contents of the destination directory if it
+                already exists before cloning.
+              name: deleteExisting
+              type: string
+            - default: ''
+              description: HTTP proxy server for non-SSL requests.
+              name: httpProxy
+              type: string
+            - default: ''
+              description: HTTPS proxy server for SSL requests.
+              name: httpsProxy
+              type: string
+            - default: ''
+              description: Opt out of proxying HTTP/HTTPS requests.
+              name: noProxy
+              type: string
+            - default: 'true'
+              description: >-
+                Log the commands that are executed during `git-clone`'s
+                operation.
+              name: verbose
+              type: string
+            - default: >-
+                registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:2b4c4958cabdceffefef68940608f2c7e6774c0b94ba3eb49fa1b9ff0b544e8c
+              description: The image providing the git-init binary that this Task runs.
+              name: gitInitImage
+              type: string
+            - default: /tekton/home
+              description: |
+                Absolute path to the user's home directory.
+              name: userHome
+              type: string
+          results:
+            - description: The precise commit SHA that was fetched by this Task.
+              name: commit
+              type: string
+            - description: The precise URL that was fetched by this Task.
+              name: url
+              type: string
+          steps:
+            - env:
+                - name: HOME
+                  value: /tekton/home
+                - name: PARAM_URL
+                  value: >-
+                    https://gitlab-gitlab.apps.cluster-mcr9m.sandbox906.opentlc.com/development/py-14.git
+                - name: PARAM_REVISION
+                  value: 3af5f2beab7d8af5871cc470672b2ab663143b5c
+                - name: PARAM_REFSPEC
+                - name: PARAM_SUBMODULES
+                  value: 'true'
+                - name: PARAM_DEPTH
+                  value: '1'
+                - name: PARAM_SSL_VERIFY
+                  value: 'true'
+                - name: PARAM_CRT_FILENAME
+                  value: ca-bundle.crt
+                - name: PARAM_SUBDIRECTORY
+                - name: PARAM_DELETE_EXISTING
+                  value: 'true'
+                - name: PARAM_HTTP_PROXY
+                - name: PARAM_HTTPS_PROXY
+                - name: PARAM_NO_PROXY
+                - name: PARAM_VERBOSE
+                  value: 'true'
+                - name: PARAM_SPARSE_CHECKOUT_DIRECTORIES
+                - name: PARAM_USER_HOME
+                  value: /tekton/home
+                - name: WORKSPACE_OUTPUT_PATH
+                  value: /workspace/output
+                - name: WORKSPACE_SSH_DIRECTORY_BOUND
+                  value: 'false'
+                - name: WORKSPACE_SSH_DIRECTORY_PATH
+                - name: WORKSPACE_BASIC_AUTH_DIRECTORY_BOUND
+                  value: 'false'
+                - name: WORKSPACE_BASIC_AUTH_DIRECTORY_PATH
+                - name: WORKSPACE_SSL_CA_DIRECTORY_BOUND
+                  value: 'false'
+                - name: WORKSPACE_SSL_CA_DIRECTORY_PATH
+              image: >-
+                registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:2b4c4958cabdceffefef68940608f2c7e6774c0b94ba3eb49fa1b9ff0b544e8c
+              name: clone
+              resources: {}
+              script: >
+                #!/usr/bin/env sh
+
+                set -eu
+
+
+                if [ "${PARAM_VERBOSE}" = "true" ] ; then
+                  set -x
+                fi
+
+
+
+                if [ "${WORKSPACE_BASIC_AUTH_DIRECTORY_BOUND}" = "true" ] ; then
+                  cp "${WORKSPACE_BASIC_AUTH_DIRECTORY_PATH}/.git-credentials" "${PARAM_USER_HOME}/.git-credentials"
+                  cp "${WORKSPACE_BASIC_AUTH_DIRECTORY_PATH}/.gitconfig" "${PARAM_USER_HOME}/.gitconfig"
+                  chmod 400 "${PARAM_USER_HOME}/.git-credentials"
+                  chmod 400 "${PARAM_USER_HOME}/.gitconfig"
+                fi
+
+
+                if [ "${WORKSPACE_SSH_DIRECTORY_BOUND}" = "true" ] ; then
+                  cp -R "${WORKSPACE_SSH_DIRECTORY_PATH}" "${PARAM_USER_HOME}"/.ssh
+                  chmod 700 "${PARAM_USER_HOME}"/.ssh
+                  chmod -R 400 "${PARAM_USER_HOME}"/.ssh/*
+                fi
+
+
+                if [ "${WORKSPACE_SSL_CA_DIRECTORY_BOUND}" = "true" ] ; then
+                   export GIT_SSL_CAPATH="${WORKSPACE_SSL_CA_DIRECTORY_PATH}"
+                   if [ "${PARAM_CRT_FILENAME}" != "" ] ; then
+                      export GIT_SSL_CAINFO="${WORKSPACE_SSL_CA_DIRECTORY_PATH}/${PARAM_CRT_FILENAME}"
+                   fi
+                fi
+
+                CHECKOUT_DIR="${WORKSPACE_OUTPUT_PATH}/${PARAM_SUBDIRECTORY}"
+
+
+                cleandir() {
+                  # Delete any existing contents of the repo directory if it exists.
+                  #
+                  # We don't just "rm -rf ${CHECKOUT_DIR}" because ${CHECKOUT_DIR} might be "/"
+                  # or the root of a mounted volume.
+                  if [ -d "${CHECKOUT_DIR}" ] ; then
+                    # Delete non-hidden files and directories
+                    rm -rf "${CHECKOUT_DIR:?}"/*
+                    # Delete files and directories starting with . but excluding ..
+                    rm -rf "${CHECKOUT_DIR}"/.[!.]*
+                    # Delete files and directories starting with .. plus any other character
+                    rm -rf "${CHECKOUT_DIR}"/..?*
+                  fi
+                }
+
+
+                if [ "${PARAM_DELETE_EXISTING}" = "true" ] ; then
+                  cleandir
+                fi
+
+
+                test -z "${PARAM_HTTP_PROXY}" || export
+                HTTP_PROXY="${PARAM_HTTP_PROXY}"
+
+                test -z "${PARAM_HTTPS_PROXY}" || export
+                HTTPS_PROXY="${PARAM_HTTPS_PROXY}"
+
+                test -z "${PARAM_NO_PROXY}" || export
+                NO_PROXY="${PARAM_NO_PROXY}"
+
+
+                /ko-app/git-init \
+                  -url="${PARAM_URL}" \
+                  -revision="${PARAM_REVISION}" \
+                  -refspec="${PARAM_REFSPEC}" \
+                  -path="${CHECKOUT_DIR}" \
+                  -sslVerify="${PARAM_SSL_VERIFY}" \
+                  -submodules="${PARAM_SUBMODULES}" \
+                  -depth="${PARAM_DEPTH}" \
+                  -sparseCheckoutDirectories="${PARAM_SPARSE_CHECKOUT_DIRECTORIES}"
+                cd "${CHECKOUT_DIR}"
+
+                RESULT_SHA="$(git rev-parse HEAD)"
+
+                EXIT_CODE="$?"
+
+                if [ "${EXIT_CODE}" != 0 ] ; then
+                  exit "${EXIT_CODE}"
+                fi
+
+                printf "%s" "${RESULT_SHA}" > "/tekton/results/commit"
+
+                printf "%s" "${PARAM_URL}" > "/tekton/results/url"
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 65532
+          workspaces:
+            - description: >-
+                The git repo will be cloned onto the volume backing this
+                Workspace.
+              name: output
+            - description: >
+                A .ssh directory with private key, known_hosts, config, etc.
+                Copied to
+
+                the user's home before git commands are executed. Used to
+                authenticate
+
+                with the git remote when performing the clone. Binding a Secret
+                to this
+
+                Workspace is strongly recommended over other volume types.
+              name: ssh-directory
+              optional: true
+            - description: >
+                A Workspace containing a .gitconfig and .git-credentials file.
+                These
+
+                will be copied to the user's home before any git commands are
+                run. Any
+
+                other files in this Workspace are ignored. It is strongly
+                recommended
+
+                to use ssh-directory over basic-auth whenever possible and to
+                bind a
+
+                Secret to this Workspace over other volume types.
+              name: basic-auth
+              optional: true
+            - description: >
+                A workspace containing CA certificates, this will be used by Git
+                to
+
+                verify the peer with when fetching or pushing over HTTPS.
+              name: ssl-ca-directory
+              optional: true

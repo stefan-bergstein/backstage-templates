@@ -2,22 +2,21 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: build-deploy-simple-python-web-server-
-  namespace: my-python-8-dev
+  namespace: py-14-dev
   labels:
-    backstage.io/kubernetes-id: my-python-8
-    rht-gitops.com/janus-argocd: my-python-8-dev-build
+    backstage.io/kubernetes-id:  py-14
     type: pipeline
 spec:
   params:
     - name: deployment-namex
       value: python-web-server
     - name: git-url
-      value: 'https://gitlab-gitlab.apps.cluster-mcr9m.sandbox906.opentlc.com/development/my-python-8.git'
+      value: 'https://gitlab-gitlab.apps.cluster-mcr9m.sandbox906.opentlc.com/development/py-14.git'
     - name: git-revision
       value: master
     - name: IMAGE
       value: >-
-        quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/my-python-8
+        quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com/quayadmin/py-14
   pipelineRef:
     name: build-and-deploy
   serviceAccountName: pipeline
@@ -37,4 +36,4 @@ spec:
         status: {}
     - name: docker-config
       secret:
-        secretName: my-python-8-registry-creds
+        secretName: py-14-registry-creds
