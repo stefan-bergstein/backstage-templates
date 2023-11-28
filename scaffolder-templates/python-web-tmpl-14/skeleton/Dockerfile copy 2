@@ -1,7 +1,4 @@
 FROM python:3
-
-#WORKDIR /src
-
 ADD src/index.html src/index.html
 ADD src/web_server.py src/web_server.py
 
