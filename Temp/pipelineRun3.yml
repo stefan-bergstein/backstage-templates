@@ -3,6 +3,10 @@ kind: PipelineRun
 metadata:
   generateName: build-deploy-simple-python-web-server-
   namespace: my-python-8-dev
+  labels:
+    backstage.io/kubernetes-id: my-python-8
+    rht-gitops.com/janus-argocd: my-python-8-dev-build
+    type: pipeline
 spec:
   params:
     - name: deployment-namex
