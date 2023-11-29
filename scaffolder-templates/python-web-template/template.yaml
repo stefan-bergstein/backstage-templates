@@ -1,9 +1,9 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: python-web-template
-  title: Python app with ArgoCD and a Tekton Pipeline
-  description: Create a simple python app with ArgoCD and a Tekton Pipeline
+  name: python-web-tmpl-17
+  title: Python app with ArgoCD and a Tekton Pipeline-17
+  description: Create a simple python app with ArgoCD and a Tekton Pipeline-17
   tags:
     - recommended
     - java
@@ -22,7 +22,7 @@ spec:
           title: Name
           type: string
           description: Unique name of the component
-          default: my-python
+          default: py-17
           ui:field: EntityNamePicker
           maxLength: 14
         group_id:
@@ -33,7 +33,7 @@ spec:
         artifact_id:
           title: Artifact Id
           type: string
-          default: mypython-app
+          default: py-app-17
           description: Maven Artifact Id
         java_package_name:
           title: Java Package Name
@@ -81,7 +81,7 @@ spec:
                   title: Image Host
                   type: string
                   description: Host for storing image
-                  default: quay-c4zsp.apps.cluster-c4zsp.sandbox160.opentlc.com
+                  default: quay-mcr9m.apps.cluster-mcr9m.sandbox906.opentlc.com
                 image_organization:
                   title: Organization
                   type: string
@@ -104,7 +104,7 @@ spec:
               title: Repo Host
               type: string
               description: Your SCM host
-              default: gitlab-gitlab.apps.cluster-c4zsp.sandbox160.opentlc.com             
+              default: gitlab-gitlab.apps.cluster-mcr9m.sandbox906.opentlc.com         
             owner:
               title: Repo Owner
               type: string
@@ -120,7 +120,7 @@ spec:
           type: string
           title: FQDN of OCP cluster
           description: FQDN of OCP cluster
-          default: .apps.cluster-c4zsp.sandbox160.opentlc.com              
+          default: .apps.cluster-mcr9m.sandbox906.opentlc.com             
   steps:
     - id: template
       name: Fetch Skeleton + Template
@@ -142,7 +142,7 @@ spec:
           host: ${{ parameters.repo.host }}
           destination: ${{ parameters.repo.owner }}/${{ parameters.component_id }}
           quay_destination: ${{ parameters.image_organization}}/${{ parameters.component_id }}
-          port: 8080
+          port: 8000
 
     - id: publish
       name: Publish
@@ -179,9 +179,9 @@ spec:
           image_organization: ${{ parameters.image_organization }}
           image_name: ${{ parameters.component_id }}
           image_tag: ${{ parameters.image_tag }}
-          port: 8080
+          port: 8000
           repository_host: ${{ parameters.repo.host }}
-          deployment_name: python-template
+          deployment_name: python-tmpl-17
         targetPath: ./tenant-gitops
 
     - id: publish-gitops
