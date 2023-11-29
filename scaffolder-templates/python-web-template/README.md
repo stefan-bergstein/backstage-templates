@@ -1,7 +1,5 @@
-# Quarkus Web Template
+# Python Web Template
 
-This repository contains the Backstage Template used to create the Kubernetes resources needed to build/deploy a simple quarkus application.
+This repository contains the Backstage Template used to create the Kubernetes resources needed to build/deploy a simple Python web application.
 
-## Repository Breakdown
-
-TBD
+This template was created by modificatio of quarqus-web-template by Yevgeniy (yevgeniy@redhat).com. 
