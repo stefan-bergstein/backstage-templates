@@ -1,9 +1,9 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: python-web-tmpl
-  title: Python app with ArgoCD and a Tekton Pipeline
-  description: Create a simple python app with ArgoCD and a Tekton Pipeline
+  name: python-web-tmpl-2
+  title: Python app with ArgoCD and a Tekton Pipeline-2
+  description: Create a simple python app with ArgoCD and a Tekton Pipeline-2
   tags:
     - recommended
     - java
@@ -181,7 +181,7 @@ spec:
           image_tag: ${{ parameters.image_tag }}
           port: 8000
           repository_host: ${{ parameters.repo.host }}
-          deployment_name: python-tmpl
+          deployment_name: python-tmpl-2
         targetPath: ./tenant-gitops
 
     - id: publish-gitops
