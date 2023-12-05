@@ -1,13 +1,11 @@
-FROM python:3
+FROM registry.access.redhat.com/ubi9/ubi
+RUN dnf install -y python3 python3-pip
 
-# ##WORKDIR /src
+WORKDIR /app
+COPY ./requirements.txt ./app ./
+RUN chmod -R ug+rwx /app
+RUN python3 -m pip install -r /app/requirements.txt
 
-CMD pwd 
-RUN pwd 
-# RUN ls -al
-
-ADD src/index.html src/index.html
-ADD src/web_server.py src/web_server.py
-
-EXPOSE 8000
-ENTRYPOINT ["python3", "src/web_server.py"]
+USER 1001
+EXPOSE 8080
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]

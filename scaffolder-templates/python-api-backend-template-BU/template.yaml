@@ -1,9 +1,9 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: python-backend-tmpl-2
-  title: Python API backend with ArgoCD and a Tekton Pipeline-2
-  description: Create a simple python API backend with ArgoCD and a Tekton Pipeline-2
+  name: python-backend-tmpl
+  title: Python API backend with ArgoCD and a Tekton Pipeline
+  description: Create a simple python API backend with ArgoCD and a Tekton Pipeline
   tags:
     - recommended
     - java
@@ -181,7 +181,7 @@ spec:
           image_tag: ${{ parameters.image_tag }}
           port: 8000
           repository_host: ${{ parameters.repo.host }}
-          deployment_name: python-bcknd-tmpl-2
+          deployment_name: python-bcknd-tmpl
         targetPath: ./tenant-gitops
 
     - id: publish-gitops
